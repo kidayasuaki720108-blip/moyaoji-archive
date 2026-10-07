@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>MOYAOJI ARCHIVE</title>
-<!-- prototype v0.4 / SHIJiMA connected build / mobile overlap fix -->
+<!-- prototype v0.5 / SHIJiMA pixel-locked glass + hotspot alignment -->
 <style>
 :root{
   --fg:#e8e8e4; --muted:#9b9b96; --glass:rgba(12,13,14,.88);
@@ -31,26 +31,29 @@ button{font:inherit}
 
 /* SHIJiMA room interactive overlay */
 #shijima .scene-bg{background-size:cover}
-#paperHotspots{position:absolute;left:25.9%;top:19.2%;width:28.2%;height:41.2%}
-.paper-hit{position:absolute;left:0;width:58%;border:0;background:transparent;cursor:pointer}
+#paperHotspots{position:absolute;left:26.256%;top:19.447%;width:28.349%;height:41.764%}
+.paper-hit{position:absolute;left:0;width:60%;border:0;background:transparent;cursor:pointer}
 .paper-hit::after{content:"";position:absolute;inset:-2px -5px;border-left:1px solid transparent;transition:.18s ease}
 .paper-hit:hover::after,.paper-hit:focus-visible::after{border-left-color:rgba(15,15,15,.22);background:rgba(0,0,0,.018)}
 .paper-hit[data-kind="profile"]{top:0;height:13%}
 .paper-hit[data-kind="album"]{top:14%;height:20%}
-.paper-hit.track[data-track="01"]{top:38.0%;height:6.5%}
-.paper-hit.track[data-track="02"]{top:44.5%;height:6.5%}
-.paper-hit.track[data-track="03"]{top:51%;height:6.5%}
-.paper-hit.track[data-track="04"]{top:57.5%;height:6.5%}
-.paper-hit.track[data-track="05"]{top:64%;height:6.5%}
-.paper-hit.track[data-track="06"]{top:70.5%;height:6.5%}
-.paper-hit.material[data-material="audio"]{top:81.0%;height:4.0%}
-.paper-hit.material[data-material="lyrics"]{top:85.0%;height:4.0%}
-.paper-hit.material[data-material="visual"]{top:89.0%;height:4.0%}
-.paper-hit.material[data-material="moving"]{top:93.0%;height:4.0%}
-.paper-hit.material[data-material="listening"]{top:97.0%;height:4.0%}
-.paper-hit.material[data-material="related"]{top:101.0%;height:4.0%}
+/* Desktop hit areas are calibrated to the printed rows in the source image. */
+.paper-hit.track[data-track="01"]{top:37.405%;height:4.835%}
+.paper-hit.track[data-track="02"]{top:42.239%;height:4.580%}
+.paper-hit.track[data-track="03"]{top:46.819%;height:4.580%}
+.paper-hit.track[data-track="04"]{top:51.399%;height:4.580%}
+.paper-hit.track[data-track="05"]{top:55.980%;height:4.580%}
+.paper-hit.track[data-track="06"]{top:60.560%;height:4.835%}
+.paper-hit.material[data-material="audio"]{top:74.555%;height:3.817%}
+.paper-hit.material[data-material="lyrics"]{top:78.372%;height:3.562%}
+.paper-hit.material[data-material="visual"]{top:81.934%;height:3.562%}
+.paper-hit.material[data-material="moving"]{top:85.496%;height:3.308%}
+.paper-hit.material[data-material="listening"]{top:88.804%;height:3.562%}
+.paper-hit.material[data-material="related"]{top:92.366%;height:3.562%}
 
-.viewer{position:absolute;left:59.5%;top:21.4%;width:25.7%;height:35.3%;overflow:hidden;background:rgba(8,9,10,.72);border:1px solid rgba(227,224,216,.14);box-shadow:inset 0 0 45px rgba(0,0,0,.55);color:#e6e5df;backdrop-filter:blur(1.6px);transition:opacity .16s ease,filter .16s ease}
+/* Fallback coordinates match the actual inner glass in the source image.
+   JS below keeps these coordinates locked to the cover-cropped background. */
+.viewer{position:absolute;left:58.672%;top:21.041%;width:25.957%;height:36.344%;overflow:hidden;background:rgba(8,9,10,.72);border:1px solid rgba(227,224,216,.14);box-shadow:inset 0 0 45px rgba(0,0,0,.55);color:#e6e5df;backdrop-filter:blur(1.6px);transition:opacity .16s ease,filter .16s ease}
 .viewer.hidden-ish{opacity:.58;filter:contrast(.92) brightness(.78)}
 .viewer::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(255,255,255,.07),transparent 25%,transparent 72%,rgba(255,255,255,.03));pointer-events:none;mix-blend-mode:screen}
 .viewer-inner{position:absolute;inset:0;padding:28px 30px;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
@@ -91,8 +94,8 @@ button{font:inherit}
 .touch-hint{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:26px;font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.62);background:rgba(5,6,7,.45);padding:7px 9px}
 @media (max-width: 850px){
   .scene-bg{background-size:auto 100%;background-position:center}
-  #paperHotspots{left:25.5%;top:19%;width:29%;height:42%}
-  .viewer{left:57.5%;top:18.3%;width:28.5%;height:39.5%}
+  #paperHotspots{left:26.256%;top:19.447%;width:28.349%;height:41.764%}
+  .viewer{left:58.672%;top:21.041%;width:25.957%;height:36.344%}
   .viewer-inner{padding:17px 18px}
   .viewer-title{font-size:15px}
   .touch-hint{display:block}
@@ -571,8 +574,46 @@ soundBtn.addEventListener('click',()=>{ if(soundOn) stopSound(); else {soundOn=t
 function playHover(){ if(!soundOn||!ctx) return; const dur=.06; const b=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate); const d=b.getChannelData(0); for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3); const s=ctx.createBufferSource(); const f=ctx.createBiquadFilter(); f.type='highpass';f.frequency.value=900; const g=ctx.createGain();g.gain.value=.018;s.buffer=b;s.connect(f).connect(g).connect(ctx.destination);s.start(); }
 function playClick(){ if(!soundOn||!ctx) return; const o=ctx.createOscillator();o.type='sine';o.frequency.setValueAtTime(88,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(48,ctx.currentTime+.12); const g=ctx.createGain();g.gain.setValueAtTime(.028,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.14);o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+.15); }
 
+/* ---------- SHIJiMA desktop image-coordinate alignment ----------
+   The background uses background-size:cover. These overlays are therefore
+   positioned from the source-image pixel coordinates, not viewport guesses. */
+function alignShijimaDesktop(){
+  const scene=document.getElementById('shijima');
+  const paper=document.getElementById('paperHotspots');
+  const viewer=scene?.querySelector('.viewer');
+  if(!scene||!paper||!viewer) return;
+
+  const mobilePortrait=matchMedia('(orientation: portrait) and (max-width:850px)').matches;
+  if(mobilePortrait){
+    [paper,viewer].forEach(el=>{
+      el.style.left=''; el.style.top=''; el.style.width=''; el.style.height='';
+    });
+    return;
+  }
+
+  const W=scene.clientWidth, H=scene.clientHeight;
+  const IW=1672, IH=941;
+  const scale=Math.max(W/IW,H/IH);
+  const drawW=IW*scale, drawH=IH*scale;
+  const ox=(W-drawW)/2, oy=(H-drawH)/2;
+  const place=(el,x,y,w,h)=>{
+    el.style.left=(ox+x*scale)+'px';
+    el.style.top=(oy+y*scale)+'px';
+    el.style.width=(w*scale)+'px';
+    el.style.height=(h*scale)+'px';
+  };
+
+  // White paper physical bounds in the 1672x941 source image.
+  place(paper,439,183,474,393);
+  // Inner dark glass only: excludes the beige/metal frame.
+  place(viewer,981,198,434,342);
+}
+window.addEventListener('resize',alignShijimaDesktop,{passive:true});
+window.addEventListener('orientationchange',()=>setTimeout(alignShijimaDesktop,80),{passive:true});
+
 if(!location.hash) location.hash='#/entrance';
 route();
+alignShijimaDesktop();
 </script>
 </body>
 </html>
