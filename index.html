@@ -374,14 +374,14 @@ button{font:inherit}
 <div id="app">
   <section id="entrance" class="scene active static-scene" aria-label="MOYAOJI ARCHIVE entrance">
     <div class="scene-frame">
-      <img class="scene-image" src="入口.png" alt="MOYAOJI ARCHIVE entrance">
+      <img class="scene-image" src="./入口.png" alt="MOYAOJI ARCHIVE entrance">
       <button class="frame-hotspot entrance-door" data-go="#/hall" aria-label="Enter MOYAOJI ARCHIVE"></button>
     </div>
   </section>
 
   <section id="hall" class="scene static-scene" aria-label="MOYAOJI ARCHIVE corridor">
     <div class="scene-frame">
-      <img class="scene-image" src="ホール.png" alt="MOYAOJI ARCHIVE corridor">
+      <img class="scene-image" src="./ホール.png" alt="MOYAOJI ARCHIVE corridor">
       <button class="frame-hotspot hall-observation" data-go="#/observation" aria-label="OBSERVATION LOG"></button>
       <button class="frame-hotspot hall-signal" data-go="#/signal" aria-label="SIGNAL"></button>
       <button class="frame-hotspot hall-afterglow" data-go="#/afterglow" aria-label="AFTERGLOW CITY"></button>
@@ -390,32 +390,32 @@ button{font:inherit}
 
   <section id="observation" class="scene static-scene" aria-label="OBSERVATION LOG">
     <div class="scene-frame">
-      <img class="scene-image" src="観察.jpg" alt="OBSERVATION LOG archive room">
+      <img class="scene-image" src="./観察.jpg" alt="OBSERVATION LOG archive room">
     </div>
   </section>
 
   <section id="afterglow" class="scene static-scene" aria-label="AFTERGLOW CITY">
     <div class="scene-frame">
-      <img class="scene-image" src="残光.jpg" alt="AFTERGLOW CITY reception">
+      <img class="scene-image" src="./残光.jpg" alt="AFTERGLOW CITY reception">
     </div>
   </section>
 
   <section id="signal" class="scene static-scene" aria-label="SIGNAL chamber">
     <div class="scene-frame">
-      <img class="scene-image" src="signal.png" alt="SIGNAL archive room">
+      <img class="scene-image" src="./signal.png" alt="SIGNAL archive room">
       <button class="frame-hotspot signal-shijima" data-go="#/signal/shijima" aria-label="SIGNAL 01 SHIJiMA"></button>
     </div>
   </section>
 
   <section id="shijima-index" class="scene static-scene" aria-label="SHIJiMA record index">
     <div class="scene-frame">
-      <img class="scene-image" src="shijima-index.png" alt="SHIJiMA record index">
+      <img class="scene-image" src="./shijima-index.png" alt="SHIJiMA record index">
       <button class="frame-hotspot shijima-mada" data-go="#/signal/shijima/mada-koko-ni-iru" aria-label="まだ、ここにいる"></button>
     </div>
   </section>
 
   <section id="shijima" class="scene" aria-label="SHIJiMA archive room">
-    <div class="scene-bg" style="background-image:url('shijima-room.png')"></div>
+    <div class="scene-bg" style="background-image:url('./shijima-room.png')"></div>
     <div id="paperHotspots" aria-label="SHIJiMA index">
       <button class="paper-hit" data-kind="profile" aria-label="SHIJiMA public record"></button>
       <button class="paper-hit" data-kind="album" aria-label="まだ、ここにいる"></button>
@@ -546,12 +546,12 @@ function showProfile(lock=false){
     静けさを基準に、危うさと未解決の余白を残すオルタナティブ・ユニット。<br><br>
     バーガー店で働いていたテラと、その隣の花屋にいた治。花を介した小さなやり取りをきっかけに言葉を交わすようになり、やがて二人で音を作り始めた。<br><br>
     派手な活動をすることなく、少しずつ作品を残している。</div>
-    <button class="portrait-thumb" type="button" data-view-portrait aria-label="SHIJiMA portrait record"><img src="shijima-portrait.jpg" alt="SHIJiMA portrait"><div class="portrait-caption">PORTRAIT 01<br>OPEN RECORD</div></button></div>`);
+    <button class="portrait-thumb" type="button" data-view-portrait aria-label="SHIJiMA portrait record"><img src="./shijima-portrait.jpg" alt="SHIJiMA portrait"><div class="portrait-caption">PORTRAIT 01<br>OPEN RECORD</div></button></div>`);
 }
 function showAlbum(lock=false){
   if(lock) locked={type:'album'};
   viewer.classList.remove('hidden-ish');
-  viewerInner.innerHTML = `<div class="cover-wrap"><img src="アルバムカバー.png" alt="まだ、ここにいる album cover"><div class="cover-meta">RECORD<br>まだ、ここにいる</div></div>`;
+  viewerInner.innerHTML = `<div class="cover-wrap"><img src="./アルバムカバー.png" alt="まだ、ここにいる album cover"><div class="cover-meta">RECORD<br>まだ、ここにいる</div></div>`;
 }
 
 function showTrack(id, lock=false){
@@ -604,7 +604,7 @@ function openMaterial(id,m){
 
 function showVisual(id){
   const t=TRACKS[id]; if(!t) return;
-  const src = id==='03' ? 'track-03-suna.jpg' : id==='04' ? 'track-04-nami.jpg' : null;
+  const src = id==='03' ? './track-03-suna.jpg' : id==='04' ? './track-04-nami.jpg' : null;
   if(!src){
     setViewer(`<div class="viewer-kicker">VISUAL MATERIAL / TRACK ${id}</div><div class="viewer-title">${t.title}</div><div class="viewer-small">NO PUBLIC VISUAL RECORD.</div>`);
     return;
@@ -613,7 +613,7 @@ function showVisual(id){
 }
 
 function showPortrait(){
-  setViewer(`<div class="image-record portrait"><img src="shijima-portrait.jpg" alt="SHIJiMA portrait"><div class="image-record-meta">PUBLIC RECORD<br>SHIJiMA / PORTRAIT 01</div><button class="image-record-action" type="button" data-return-profile>RETURN</button></div>`);
+  setViewer(`<div class="image-record portrait"><img src="./shijima-portrait.jpg" alt="SHIJiMA portrait"><div class="image-record-meta">PUBLIC RECORD<br>SHIJiMA / PORTRAIT 01</div><button class="image-record-action" type="button" data-return-profile>RETURN</button></div>`);
 }
 
 function showExternalPending(id,m,source){
