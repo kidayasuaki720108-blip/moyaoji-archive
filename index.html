@@ -436,6 +436,8 @@ button{font:inherit}
   </section>
 </div>
 
+<audio id="entranceMusic" src="./entrance-theme.mp3" loop preload="metadata"></audio>
+
 <div class="corner-ui">
   <button id="backBtn" class="back-link" type="button">BACK</button>
   <button id="soundBtn" class="sound-toggle" type="button">SOUND OFF</button>
@@ -490,6 +492,7 @@ const viewer = document.getElementById('viewer');
 const viewerInner = document.getElementById('viewerInner');
 const soundBtn = document.getElementById('soundBtn');
 const statusEl = document.getElementById('status');
+const entranceMusic = document.getElementById('entranceMusic');
 
 function route(){
   const h = location.hash || '#/entrance';
@@ -507,6 +510,7 @@ function route(){
   else if(h.startsWith('#/hall')) target = 'hall';
 
   document.getElementById(target)?.classList.add('active');
+  syncEntranceMusic(target);
 
   if(isDetail) statusEl.textContent = 'SIGNAL 01 / SHIJiMA / まだ、ここにいる';
   else if(target === 'shijima-index') statusEl.textContent = 'SIGNAL 01 / SHIJiMA';
@@ -665,36 +669,61 @@ document.querySelectorAll('.paper-hit').forEach(el=>{
   el.addEventListener('click',()=>activateHit(el));
 });
 
-document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>{startSoundOnGesture();playClick();location.hash=el.dataset.go;}));
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>{playClick();location.hash=el.dataset.go;}));
 document.getElementById('backBtn').addEventListener('click',()=>history.back());
 window.addEventListener('hashchange',route);
 
-/* ---------- subtle procedural ambience ---------- */
-let ctx=null, ambience=null, soundOn=false;
-function ensureAudio(){
+/* ---------- entrance music + subtle UI sounds ---------- */
+let ctx=null, soundOn=false;
+function ensureAudioContext(){
   if(ctx) return;
   ctx=new (window.AudioContext||window.webkitAudioContext)();
 }
-function startAmbience(){
-  ensureAudio(); if(ambience) ambience.stop?.();
-  const buffer=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate);
-  const d=buffer.getChannelData(0); let last=0;
-  for(let i=0;i<d.length;i++){ const w=Math.random()*2-1; last=(last*.985)+(w*.015); d[i]=last; }
-  const src=ctx.createBufferSource(); src.buffer=buffer; src.loop=true;
-  const filter=ctx.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value=360;
-  const gain=ctx.createGain(); gain.gain.value=.032;
-  const hum=ctx.createOscillator(); hum.type='sine'; hum.frequency.value=49;
-  const hgain=ctx.createGain(); hgain.gain.value=.006;
-  src.connect(filter).connect(gain).connect(ctx.destination); hum.connect(hgain).connect(ctx.destination);
-  src.start(); hum.start(); ambience={stop(){try{src.stop();hum.stop()}catch(e){}}};
+function syncEntranceMusic(target){
+  if(!entranceMusic) return;
+  if(soundOn && target==='entrance'){
+    entranceMusic.play().catch(()=>{});
+  }else{
+    entranceMusic.pause();
+  }
 }
-function startSoundOnGesture(){
-  if(soundOn) return; soundOn=true; ensureAudio(); ctx.resume(); startAmbience(); soundBtn.textContent='SOUND ON';
+function setSound(on){
+  soundOn=on;
+  soundBtn.textContent=on?'SOUND ON':'SOUND OFF';
+  if(on){
+    ensureAudioContext();
+    ctx.resume?.();
+    const h=location.hash || '#/entrance';
+    syncEntranceMusic(h==='#/entrance' ? 'entrance' : '');
+  }else{
+    entranceMusic?.pause();
+  }
 }
-function stopSound(){ if(ambience){ambience.stop();ambience=null;} soundOn=false; soundBtn.textContent='SOUND OFF'; }
-soundBtn.addEventListener('click',()=>{ if(soundOn) stopSound(); else {soundOn=true;ensureAudio();ctx.resume();startAmbience();soundBtn.textContent='SOUND ON';} });
-function playHover(){ if(!soundOn||!ctx) return; const dur=.06; const b=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate); const d=b.getChannelData(0); for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3); const s=ctx.createBufferSource(); const f=ctx.createBiquadFilter(); f.type='highpass';f.frequency.value=900; const g=ctx.createGain();g.gain.value=.018;s.buffer=b;s.connect(f).connect(g).connect(ctx.destination);s.start(); }
-function playClick(){ if(!soundOn||!ctx) return; const o=ctx.createOscillator();o.type='sine';o.frequency.setValueAtTime(88,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(48,ctx.currentTime+.12); const g=ctx.createGain();g.gain.setValueAtTime(.028,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.14);o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+.15); }
+soundBtn.addEventListener('click',()=>setSound(!soundOn));
+function playHover(){
+  if(!soundOn||!ctx) return;
+  const dur=.06;
+  const b=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
+  const d=b.getChannelData(0);
+  for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
+  const s=ctx.createBufferSource();
+  const f=ctx.createBiquadFilter();
+  f.type='highpass'; f.frequency.value=900;
+  const g=ctx.createGain(); g.gain.value=.018;
+  s.buffer=b; s.connect(f).connect(g).connect(ctx.destination); s.start();
+}
+function playClick(){
+  if(!soundOn||!ctx) return;
+  const o=ctx.createOscillator();
+  o.type='sine';
+  o.frequency.setValueAtTime(88,ctx.currentTime);
+  o.frequency.exponentialRampToValueAtTime(48,ctx.currentTime+.12);
+  const g=ctx.createGain();
+  g.gain.setValueAtTime(.028,ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.14);
+  o.connect(g).connect(ctx.destination);
+  o.start(); o.stop(ctx.currentTime+.15);
+}
 
 /* ---------- SHIJiMA desktop image-coordinate alignment ----------
    The background uses background-size:cover. These overlays are therefore
