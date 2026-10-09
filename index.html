@@ -94,8 +94,8 @@ button{font:inherit}
   color:#e9e8e2;text-align:center;pointer-events:none;text-transform:uppercase;
   text-shadow:0 1px 12px rgba(0,0,0,.45)
 }
-.signal-wnc-label .signal-no{display:block;font-size:clamp(7px,.68vw,11px);letter-spacing:.24em;margin-bottom:.9em}
-.signal-wnc-label .signal-name{display:block;font-size:clamp(8px,.83vw,14px);letter-spacing:.16em;line-height:1.35}
+.signal-wnc-label .signal-no{display:block;font-size:clamp(4px,.68vw,11px);letter-spacing:.20em;margin-bottom:.9em;white-space:nowrap}
+.signal-wnc-label .signal-name{display:block;font-size:clamp(4px,.83vw,14px);letter-spacing:.10em;line-height:1.2;white-space:nowrap}
 
 /* WNC first layer — one active record on the right shelf. */
 .wnc-record{left:72.0%;top:52.0%;width:9.0%;height:12.0%;min-width:48px;min-height:40px}
@@ -416,6 +416,12 @@ button{font:inherit}
   .status{display:none}
 }
 
+
+@media (orientation:portrait) and (max-width:850px){
+  /* Keep the SIGNAL 02 label proportional to the scaled gallery image on phones. */
+  .signal-wnc-label .signal-no{font-size:3.6px;letter-spacing:.14em}
+  .signal-wnc-label .signal-name{font-size:4px;letter-spacing:.07em;line-height:1;white-space:nowrap}
+}
 
 @media (orientation:portrait) and (max-width:850px){
   body:not(.detail-route) .corner-ui{
