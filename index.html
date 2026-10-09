@@ -86,6 +86,66 @@ button{font:inherit}
 /* SHIJiMA room — first lower drawer carrying まだ、ここにいる. */
 .shijima-mada{left:23.4%;top:67.0%;width:14.7%;height:20.0%}
 
+
+/* SIGNAL 02 / WHITE NOISE CLUB — right wall display in the shared SIGNAL room. */
+.signal-wnc{left:67.0%;top:35.3%;width:14.8%;height:20.4%}
+.signal-wnc-label{
+  position:absolute;z-index:3;left:67.0%;top:39.2%;width:14.8%;
+  color:#e9e8e2;text-align:center;pointer-events:none;text-transform:uppercase;
+  text-shadow:0 1px 12px rgba(0,0,0,.45)
+}
+.signal-wnc-label .signal-no{display:block;font-size:clamp(7px,.68vw,11px);letter-spacing:.24em;margin-bottom:.9em}
+.signal-wnc-label .signal-name{display:block;font-size:clamp(8px,.83vw,14px);letter-spacing:.16em;line-height:1.35}
+
+/* WNC first layer — one active record on the right shelf. */
+.wnc-record{left:72.0%;top:52.0%;width:9.0%;height:12.0%;min-width:48px;min-height:40px}
+.wnc-record-hint{
+  position:absolute;z-index:6;left:68.2%;top:66.1%;width:17.0%;
+  padding:7px 9px;background:rgba(8,9,10,.82);border:1px solid rgba(255,255,255,.10);
+  color:#e8e7e1;font-size:clamp(7px,.62vw,10px);letter-spacing:.12em;line-height:1.5;
+  text-align:center;opacity:0;transform:translateY(4px);transition:opacity .16s ease,transform .16s ease;
+  pointer-events:none;text-transform:uppercase
+}
+.wnc-record:hover + .wnc-record-hint,.wnc-record:focus-visible + .wnc-record-hint,.wnc-record-hint.show{opacity:1;transform:translateY(0)}
+
+/* WNC album room — right board selects, left wall displays. */
+.wnc-viewer{
+  position:absolute;z-index:5;left:8.6%;top:27.0%;width:36.8%;height:38.0%;
+  padding:18px 22px;background:rgba(239,229,208,.93);border:1px solid rgba(35,28,22,.12);
+  box-shadow:0 12px 34px rgba(42,29,18,.14);color:#28231f;opacity:0;pointer-events:none;
+  transform:translateY(3px);transition:opacity .16s ease,transform .16s ease;overflow:hidden
+}
+.wnc-viewer.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+.wnc-viewer.linkable{cursor:pointer}
+.wnc-viewer.linkable:hover{box-shadow:0 13px 38px rgba(42,29,18,.20)}
+.wnc-viewer-inner{height:100%;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.wnc-kicker{font-size:clamp(7px,.58vw,9px);letter-spacing:.22em;text-transform:uppercase;opacity:.58;margin-bottom:10px}
+.wnc-title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(15px,1.55vw,26px);letter-spacing:.07em;line-height:1.24;margin-bottom:14px}
+.wnc-copy{font-size:clamp(8px,.72vw,12px);line-height:1.75;letter-spacing:.035em;max-width:95%}
+.wnc-pending{margin-top:16px;font-size:clamp(7px,.62vw,10px);letter-spacing:.16em;text-transform:uppercase;opacity:.56}
+.wnc-open{margin-top:16px;font-size:clamp(7px,.62vw,10px);letter-spacing:.16em;text-transform:uppercase}
+.wnc-media{display:flex;align-items:center;gap:20px;height:100%;min-height:0}
+.wnc-media img{display:block;max-width:48%;max-height:92%;object-fit:contain;box-shadow:0 9px 28px rgba(0,0,0,.17)}
+.wnc-media .wnc-copy{flex:1}
+.wnc-members-photo{max-width:58%!important;box-shadow:0 10px 28px rgba(0,0,0,.15)!important}
+
+.wnc-desktop-hit{position:absolute;z-index:7;border:0;background:transparent;padding:0;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+.wnc-desktop-hit::after{content:"";position:absolute;inset:0;border:1px solid transparent;transition:.14s ease}
+.wnc-desktop-hit:hover::after,.wnc-desktop-hit:focus-visible::after{border-color:rgba(255,234,195,.13);background:rgba(255,235,205,.02)}
+.wnc-hit-cover{left:50.3%;top:24.3%;width:19.2%;height:40.0%}
+.wnc-hit-album{left:70.2%;top:23.5%;width:14.4%;height:9.0%}
+.wnc-hit-t1{left:70.2%;top:33.8%;width:14.4%;height:2.9%}
+.wnc-hit-t2{left:70.2%;top:36.3%;width:14.4%;height:2.9%}
+.wnc-hit-t3{left:70.2%;top:38.7%;width:14.4%;height:2.9%}
+.wnc-hit-t4{left:70.2%;top:41.1%;width:14.4%;height:2.9%}
+.wnc-hit-t5{left:70.2%;top:43.5%;width:14.4%;height:2.9%}
+.wnc-hit-t6{left:70.2%;top:45.9%;width:14.4%;height:2.9%}
+.wnc-hit-t7{left:70.2%;top:48.3%;width:14.4%;height:2.9%}
+.wnc-hit-members{left:70.2%;top:51.2%;width:14.4%;height:14.0%}
+.wnc-hit-youtube{left:70.2%;top:66.3%;width:14.4%;height:4.3%}
+
+.wnc-mobile-controls{display:none}
+
 .corner-ui{position:fixed;z-index:100;left:18px;bottom:16px;display:flex;gap:8px;align-items:center}
 .sound-toggle,.back-link{border:0;background:rgba(7,8,9,.58);backdrop-filter:blur(6px);color:#bfc0bc;padding:8px 10px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
 .sound-toggle:hover,.back-link:hover{color:#fff}
@@ -368,6 +428,48 @@ button{font:inherit}
   }
 }
 
+
+@media (orientation:portrait) and (max-width:850px){
+  #wnc-album{
+    overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+    padding-bottom:88px;background:#0b0c0d;
+  }
+  #wnc-album .scene-frame{
+    position:relative;left:auto;top:auto;transform:none;width:100vw;height:56.28vw;
+    max-width:none;max-height:none;margin-top:12dvh;overflow:hidden;
+  }
+  #wnc-album .wnc-desktop-hit,#wnc-album .wnc-viewer{display:none}
+  .wnc-mobile-controls{
+    display:block;width:calc(100% - 28px);margin:14px;padding:15px 17px 18px;
+    background:rgba(237,229,213,.97);border:1px solid rgba(30,26,22,.14);color:#211e1b;
+    box-shadow:0 12px 32px rgba(0,0,0,.20)
+  }
+  .wnc-mobile-controls::before{
+    content:"WHITE NOISE CLUB  /  THE SPACE BETWEEN SIGNALS";display:block;
+    margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(30,26,22,.15);
+    font-size:9px;line-height:1.55;letter-spacing:.16em
+  }
+  .wnc-mobile-button{
+    width:100%;min-height:40px;border:0;border-bottom:1px solid rgba(30,26,22,.09);
+    background:transparent;color:#211e1b;text-align:left;padding:10px 3px;
+    font-size:11px;line-height:1.35;letter-spacing:.07em
+  }
+  .wnc-mobile-button:active,.wnc-mobile-button:focus-visible{background:rgba(30,26,22,.04)}
+  .wnc-mobile-viewer{
+    min-height:360px;margin-top:14px;padding:20px;background:rgba(12,12,12,.94);color:#e8e4dc;
+    border:1px solid rgba(255,255,255,.10);display:flex;align-items:center
+  }
+  .wnc-mobile-viewer .wnc-viewer-inner{width:100%;height:auto;justify-content:flex-start}
+  .wnc-mobile-viewer .wnc-title{font-size:20px}
+  .wnc-mobile-viewer .wnc-copy{font-size:11px;line-height:1.8;max-width:none}
+  .wnc-mobile-viewer .wnc-media{display:block;height:auto}
+  .wnc-mobile-viewer .wnc-media img{max-width:100%;width:100%;max-height:none;margin-bottom:18px;box-shadow:none}
+  .wnc-mobile-viewer .wnc-members-photo{max-width:100%!important}
+  .wnc-mobile-open{display:none;margin-top:14px;border:1px solid rgba(255,255,255,.15);background:transparent;color:#e8e4dc;padding:10px 12px;font-size:9px;letter-spacing:.14em}
+  .wnc-mobile-open.show{display:inline-block}
+  body.detail-route .corner-ui{position:relative;left:auto;bottom:auto;margin:14px;width:calc(100% - 28px)}
+}
+
 </style>
 </head>
 <body>
@@ -404,6 +506,8 @@ button{font:inherit}
     <div class="scene-frame">
       <img class="scene-image" src="./signal.png" alt="SIGNAL archive room">
       <button class="frame-hotspot signal-shijima" data-go="#/signal/shijima" aria-label="SIGNAL 01 SHIJiMA"></button>
+      <button class="frame-hotspot signal-wnc" data-go="#/signal/wnc" aria-label="SIGNAL 02 WHITE NOISE CLUB"></button>
+      <div class="signal-wnc-label" aria-hidden="true"><span class="signal-no">SIGNAL 02</span><span class="signal-name">WHITE NOISE CLUB</span></div>
     </div>
   </section>
 
@@ -411,6 +515,47 @@ button{font:inherit}
     <div class="scene-frame">
       <img class="scene-image" src="./shijima-index.png" alt="SHIJiMA record index">
       <button class="frame-hotspot shijima-mada" data-go="#/signal/shijima/mada-koko-ni-iru" aria-label="まだ、ここにいる"></button>
+    </div>
+  </section>
+
+  <section id="wnc-index" class="scene static-scene" aria-label="WHITE NOISE CLUB record index">
+    <div class="scene-frame">
+      <img class="scene-image" src="./wnc-index.png" alt="WHITE NOISE CLUB record index">
+      <button id="wncRecordButton" class="frame-hotspot wnc-record" type="button" aria-label="THE SPACE BETWEEN SIGNALS"></button>
+      <div id="wncRecordHint" class="wnc-record-hint">THE SPACE BETWEEN SIGNALS<br>7-TRACK MINI ALBUM</div>
+    </div>
+  </section>
+
+  <section id="wnc-album" class="scene static-scene" aria-label="THE SPACE BETWEEN SIGNALS archive room">
+    <div class="scene-frame">
+      <img class="scene-image" src="./wnc-album-room.png" alt="THE SPACE BETWEEN SIGNALS archive room">
+      <div id="wncViewer" class="wnc-viewer" role="button" tabindex="0" aria-live="polite"><div id="wncViewerInner" class="wnc-viewer-inner"></div></div>
+      <button class="wnc-desktop-hit wnc-hit-cover" type="button" data-wnc-action="cover" aria-label="Album cover"></button>
+      <button class="wnc-desktop-hit wnc-hit-album" type="button" data-wnc-action="notes" aria-label="Album notes"></button>
+      <button class="wnc-desktop-hit wnc-hit-t1" type="button" data-wnc-action="track" data-wnc-track="01" aria-label="01 The Screen Looked Back"></button>
+      <button class="wnc-desktop-hit wnc-hit-t2" type="button" data-wnc-action="track" data-wnc-track="02" aria-label="02 The House Between Hours"></button>
+      <button class="wnc-desktop-hit wnc-hit-t3" type="button" data-wnc-action="track" data-wnc-track="03" aria-label="03 Under the Signal"></button>
+      <button class="wnc-desktop-hit wnc-hit-t4" type="button" data-wnc-action="track" data-wnc-track="04" aria-label="04 The City Didn’t Change"></button>
+      <button class="wnc-desktop-hit wnc-hit-t5" type="button" data-wnc-action="track" data-wnc-track="05" aria-label="05 Blue Before The Words"></button>
+      <button class="wnc-desktop-hit wnc-hit-t6" type="button" data-wnc-action="track" data-wnc-track="06" aria-label="06 Antenna Lights"></button>
+      <button class="wnc-desktop-hit wnc-hit-t7" type="button" data-wnc-action="track" data-wnc-track="07" aria-label="07 Between"></button>
+      <button class="wnc-desktop-hit wnc-hit-members" type="button" data-wnc-action="members" aria-label="Members"></button>
+      <button class="wnc-desktop-hit wnc-hit-youtube" type="button" data-wnc-action="youtube" aria-label="YouTube release status"></button>
+    </div>
+    <div class="wnc-mobile-controls" aria-label="WHITE NOISE CLUB album controls">
+      <button class="wnc-mobile-button" type="button" data-wnc-action="cover">ALBUM COVER</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="notes">ALBUM / NOTES</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="track" data-wnc-track="01">01&nbsp;&nbsp;The Screen Looked Back</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="track" data-wnc-track="02">02&nbsp;&nbsp;The House Between Hours</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="track" data-wnc-track="03">03&nbsp;&nbsp;Under the Signal</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="track" data-wnc-track="04">04&nbsp;&nbsp;The City Didn’t Change</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="track" data-wnc-track="05">05&nbsp;&nbsp;Blue Before The Words</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="track" data-wnc-track="06">06&nbsp;&nbsp;Antenna Lights</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="track" data-wnc-track="07">07&nbsp;&nbsp;Between</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="members">MEMBERS</button>
+      <button class="wnc-mobile-button" type="button" data-wnc-action="youtube">YOUTUBE</button>
+      <div id="wncMobileViewer" class="wnc-mobile-viewer"><div id="wncMobileViewerInner" class="wnc-viewer-inner"><div class="wnc-kicker">SIGNAL 02</div><div class="wnc-title">Select a record.</div></div></div>
+      <button id="wncMobileOpen" class="wnc-mobile-open" type="button">OPEN EXTERNAL SIGNAL</button>
     </div>
   </section>
 
@@ -463,6 +608,23 @@ const EXTERNAL = {
   sumimaCM: "https://www.youtube.com/watch?v=D0sDHwLl8OY&t=11s"
 };
 
+
+const WNC_TRACKS = {
+  "01":"The Screen Looked Back",
+  "02":"The House Between Hours",
+  "03":"Under the Signal",
+  "04":"The City Didn’t Change",
+  "05":"Blue Before The Words",
+  "06":"Antenna Lights",
+  "07":"Between"
+};
+
+/* Add only confirmed public URLs here. Empty strings deliberately remain inactive. */
+const WNC_EXTERNAL = {
+  album: "",
+  tracks: {"01":"","02":"","03":"","04":"","05":"","06":"","07":""}
+};
+
 const TRACKS = {
   "01": { title:"〇", materials:["audio","lyrics","listening"] },
   "02": { title:"窓", materials:["audio","lyrics","listening"] },
@@ -494,16 +656,28 @@ const soundBtn = document.getElementById('soundBtn');
 const statusEl = document.getElementById('status');
 const entranceMusic = document.getElementById('entranceMusic');
 
+const wncViewer = document.getElementById('wncViewer');
+const wncViewerInner = document.getElementById('wncViewerInner');
+const wncMobileViewerInner = document.getElementById('wncMobileViewerInner');
+const wncMobileOpen = document.getElementById('wncMobileOpen');
+let wncLocked = null;
+let wncCurrentUrl = "";
+let wncRecordArmed = false;
+
 function route(){
   const h = location.hash || '#/entrance';
   document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
 
-  const isDetail = h.startsWith('#/signal/shijima/mada-koko-ni-iru');
+  const isShijimaDetail = h.startsWith('#/signal/shijima/mada-koko-ni-iru');
+  const isWncDetail = h.startsWith('#/signal/wnc/the-space-between-signals');
+  const isDetail = isShijimaDetail || isWncDetail;
   document.body.classList.toggle('detail-route', isDetail);
 
   let target = 'entrance';
-  if(isDetail) target = 'shijima';
+  if(isShijimaDetail) target = 'shijima';
+  else if(isWncDetail) target = 'wnc-album';
   else if(h === '#/signal/shijima') target = 'shijima-index';
+  else if(h === '#/signal/wnc') target = 'wnc-index';
   else if(h.startsWith('#/signal')) target = 'signal';
   else if(h.startsWith('#/observation')) target = 'observation';
   else if(h.startsWith('#/afterglow')) target = 'afterglow';
@@ -512,14 +686,17 @@ function route(){
   document.getElementById(target)?.classList.add('active');
   syncEntranceMusic(target);
 
-  if(isDetail) statusEl.textContent = 'SIGNAL 01 / SHIJiMA / まだ、ここにいる';
+  if(isShijimaDetail) statusEl.textContent = 'SIGNAL 01 / SHIJiMA / まだ、ここにいる';
+  else if(isWncDetail) statusEl.textContent = 'SIGNAL 02 / WHITE NOISE CLUB / THE SPACE BETWEEN SIGNALS';
   else if(target === 'shijima-index') statusEl.textContent = 'SIGNAL 01 / SHIJiMA';
+  else if(target === 'wnc-index') statusEl.textContent = 'SIGNAL 02 / WHITE NOISE CLUB';
   else if(target === 'signal') statusEl.textContent = 'SIGNAL';
   else if(target === 'observation') statusEl.textContent = 'OBSERVATION LOG';
   else if(target === 'afterglow') statusEl.textContent = 'AFTERGLOW CITY';
   else statusEl.textContent = 'ARCHIVE ACTIVE';
 
-  if(isDetail) renderFromRoute(h);
+  if(isShijimaDetail) renderFromRoute(h);
+  if(isWncDetail) resetWncViewer();
 }
 
 function renderFromRoute(h){
@@ -668,6 +845,92 @@ document.querySelectorAll('.paper-hit').forEach(el=>{
   el.addEventListener('mouseleave',()=>{ if(!matchMedia('(pointer: coarse)').matches) restoreLocked(); });
   el.addEventListener('click',()=>activateHit(el));
 });
+
+
+/* ---------- WHITE NOISE CLUB / SIGNAL 02 ---------- */
+function wncHtml(action, trackId){
+  if(action==='cover'){
+    return `<div class="wnc-media"><img src="./wnc-album-cover.jpg" alt="THE SPACE BETWEEN SIGNALS album cover"><div class="wnc-copy"><div class="wnc-kicker">ALBUM COVER</div><div class="wnc-title">THE SPACE BETWEEN SIGNALS</div><div>WHITE NOISE CLUB<br>7-track Mini Album</div></div></div>`;
+  }
+  if(action==='notes'){
+    return `<div class="wnc-kicker">ALBUM RECORD</div><div class="wnc-title">THE SPACE BETWEEN SIGNALS</div><div class="wnc-copy">WHITE NOISE CLUBのファースト・ミニアルバム。全7曲。<br><br>バー「menorah」の奥にサム・ポークが長期間籠もり、そこで曲を書き溜めていたという噂がある。物置には『THE SPACE BETWEEN SIGNALS』と記されたメモが残されていた。</div>`;
+  }
+  if(action==='members'){
+    return `<div class="wnc-media"><img class="wnc-members-photo" src="./wnc-portrait.jpg" alt="WHITE NOISE CLUB artist portrait"><div class="wnc-copy"><div class="wnc-kicker">PUBLIC RECORD / MEMBERS</div><div class="wnc-title">WHITE NOISE CLUB</div>Sam Pork — Vocal<br>Sinéad O’Meara — Guitar<br>Ichisam Boone — Bass<br>Nisam Boone — Keyboards<br>Golda Writer — Drums<br><br><strong>The Sixth Member: Rebecca Levi</strong><br>バー「menorah」の経営者。演奏メンバーではない。</div></div>`;
+  }
+  if(action==='youtube'){
+    return `<div class="wnc-kicker">EXTERNAL SIGNAL</div><div class="wnc-title">YouTube</div><div class="wnc-copy">音楽の再生先はYouTubeです。</div><div class="wnc-pending">YouTube公開準備中</div>`;
+  }
+  if(action==='track'){
+    const title=WNC_TRACKS[trackId]||'';
+    const url=WNC_EXTERNAL.tracks[trackId]||'';
+    return `<div class="wnc-kicker">TRACK ${trackId}</div><div class="wnc-title">${title}</div><div class="wnc-copy">THE SPACE BETWEEN SIGNALS</div>${url?'<div class="wnc-open">OPEN EXTERNAL SIGNAL</div>':'<div class="wnc-pending">YouTube公開準備中</div>'}`;
+  }
+  return '';
+}
+
+function wncUrl(action, trackId){
+  if(action==='track') return WNC_EXTERNAL.tracks[trackId]||'';
+  if(action==='youtube') return WNC_EXTERNAL.album||'';
+  return '';
+}
+
+function renderWnc(action, trackId='', lock=false){
+  if(lock) wncLocked={action,trackId};
+  const html=wncHtml(action,trackId);
+  const url=wncUrl(action,trackId);
+  wncCurrentUrl=url;
+  if(wncViewer && wncViewerInner){
+    wncViewerInner.innerHTML=html;
+    wncViewer.classList.add('visible');
+    wncViewer.classList.toggle('linkable',!!url);
+    wncViewer.setAttribute('aria-label',url?'Open external signal':'WHITE NOISE CLUB record display');
+  }
+  if(wncMobileViewerInner) wncMobileViewerInner.innerHTML=html;
+  if(wncMobileOpen){
+    wncMobileOpen.classList.toggle('show',!!url);
+    wncMobileOpen.dataset.url=url;
+  }
+}
+
+function resetWncViewer(){
+  wncLocked=null; wncCurrentUrl='';
+  if(wncViewer){wncViewer.classList.remove('visible','linkable');wncViewer.removeAttribute('data-url');}
+  if(wncMobileViewerInner) wncMobileViewerInner.innerHTML='<div class="wnc-kicker">SIGNAL 02</div><div class="wnc-title">Select a record.</div>';
+  if(wncMobileOpen){wncMobileOpen.classList.remove('show');wncMobileOpen.dataset.url='';}
+}
+
+function restoreWncLocked(){
+  if(wncLocked) renderWnc(wncLocked.action,wncLocked.trackId,true);
+  else if(wncViewer){wncViewer.classList.remove('visible','linkable');wncCurrentUrl='';}
+}
+
+function openWncCurrent(){ if(wncCurrentUrl) window.open(wncCurrentUrl,'_blank','noopener'); }
+wncViewer?.addEventListener('click',openWncCurrent);
+wncViewer?.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&wncCurrentUrl){e.preventDefault();openWncCurrent();}});
+wncMobileOpen?.addEventListener('click',()=>{const u=wncMobileOpen.dataset.url;if(u)window.open(u,'_blank','noopener');});
+
+document.querySelectorAll('.wnc-desktop-hit').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{if(!matchMedia('(pointer: coarse)').matches){playHover();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',false);}});
+  el.addEventListener('mouseleave',()=>{if(!matchMedia('(pointer: coarse)').matches)restoreWncLocked();});
+  el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);});
+});
+
+document.querySelectorAll('.wnc-mobile-button').forEach(el=>el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);}));
+
+const wncRecordButton=document.getElementById('wncRecordButton');
+const wncRecordHint=document.getElementById('wncRecordHint');
+wncRecordButton?.addEventListener('click',()=>{
+  const coarse=matchMedia('(pointer: coarse)').matches;
+  if(coarse && !wncRecordArmed){
+    wncRecordArmed=true;wncRecordHint?.classList.add('show');playHover();
+    setTimeout(()=>{wncRecordArmed=false;wncRecordHint?.classList.remove('show');},1800);
+    return;
+  }
+  wncRecordArmed=false;wncRecordHint?.classList.remove('show');playClick();
+  location.hash='#/signal/wnc/the-space-between-signals';
+});
+
 
 document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>{playClick();location.hash=el.dataset.go;}));
 document.getElementById('backBtn').addEventListener('click',()=>history.back());
