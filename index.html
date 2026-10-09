@@ -90,14 +90,14 @@ button{font:inherit}
   opacity:1;background:rgba(7,8,9,.68);outline:none;
 }
 .entrance-depth-nav:active{transform:translateX(-50%) scale(.94)}
-.entrance-depth-nav.forward{top:2.8%}
-.entrance-depth-nav.back{bottom:3.0%}
+.entrance-depth-nav.back{left:calc(50% - 27px);bottom:3.0%}
+.entrance-depth-nav.forward{left:calc(50% + 27px);bottom:3.0%}
 .entrance-depth-nav[hidden]{display:none}
 .entrance-door[hidden]{display:none}
 @media (max-width:700px),(pointer:coarse){
   .entrance-depth-nav{width:44px;height:44px;font-size:22px;opacity:.82}
-  .entrance-depth-nav.forward{top:3.5%}
-  .entrance-depth-nav.back{bottom:4.0%}
+  .entrance-depth-nav.back{left:calc(50% - 26px);bottom:4.0%}
+  .entrance-depth-nav.forward{left:calc(50% + 26px);bottom:4.0%}
 }
 
 /* ARCHIVE corridor — three category doors. */
