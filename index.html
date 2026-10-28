@@ -171,6 +171,54 @@ button{font:inherit}
 .wnc-hit-members{left:70.2%;top:51.2%;width:14.4%;height:14.0%}
 .wnc-hit-youtube{left:70.2%;top:66.3%;width:14.4%;height:4.3%}
 
+
+
+/* WNC relationship map modal */
+.wnc-map-modal{
+  position:fixed;inset:0;z-index:260;
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(14px,3vw,40px);
+  background:rgba(5,5,6,.82);
+  backdrop-filter:blur(3px);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+.wnc-map-modal.open{opacity:1;visibility:visible;pointer-events:auto}
+.wnc-map-dialog{
+  position:relative;
+  width:min(94vw,1180px);
+  max-height:92vh;
+  padding:clamp(10px,1.3vw,18px);
+  background:rgba(14,14,16,.97);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 22px 70px rgba(0,0,0,.55);
+  transform:scale(.965) translateY(8px);
+  transition:transform .18s ease;
+}
+.wnc-map-modal.open .wnc-map-dialog{transform:scale(1) translateY(0)}
+.wnc-map-dialog img{
+  display:block;
+  width:100%;height:auto;
+  max-height:calc(92vh - 52px);
+  object-fit:contain;
+}
+.wnc-map-close{
+  position:absolute;z-index:2;right:12px;top:12px;
+  min-width:58px;height:34px;padding:0 12px;
+  border:1px solid rgba(255,255,255,.32);
+  background:rgba(8,8,9,.78);color:#f2efe8;
+  font:600 9px/1 Arial,sans-serif;letter-spacing:.14em;
+  cursor:pointer;
+}
+.wnc-map-close:hover,.wnc-map-close:focus-visible{background:rgba(255,255,255,.13)}
+body.wnc-modal-open{overflow:hidden}
+@media (max-width:850px){
+  .wnc-map-modal{padding:10px}
+  .wnc-map-dialog{width:96vw;max-height:94vh;padding:8px}
+  .wnc-map-dialog img{max-height:calc(94vh - 30px)}
+  .wnc-map-close{right:10px;top:10px;min-width:52px;height:32px}
+}
+
 .wnc-mobile-controls{display:none}
 
 .corner-ui{position:fixed;z-index:100;left:18px;bottom:16px;display:flex;gap:8px;align-items:center}
@@ -594,6 +642,13 @@ button{font:inherit}
     </div>
   </section>
 
+  <div id="wncRelationshipModal" class="wnc-map-modal" aria-hidden="true">
+    <div class="wnc-map-dialog" role="dialog" aria-modal="true" aria-label="WHITE NOISE CLUB relationship map">
+      <button id="wncRelationshipClose" class="wnc-map-close" type="button" aria-label="Close relationship map">CLOSE</button>
+      <img src="./wnc-relationship-map.png" alt="WHITE NOISE CLUB relationship map">
+    </div>
+  </div>
+
   <section id="shijima" class="scene" aria-label="SHIJiMA archive room">
     <div class="scene-bg" style="background-image:url('./shijima-room.png')"></div>
     <div id="paperHotspots" aria-label="SHIJiMA index">
@@ -738,7 +793,33 @@ let wncLocked = null;
 let wncCurrentUrl = "";
 let wncRecordArmed = false;
 
+const wncRelationshipModal = document.getElementById('wncRelationshipModal');
+const wncRelationshipClose = document.getElementById('wncRelationshipClose');
+
+function openWncRelationshipMap(){
+  if(!wncRelationshipModal) return;
+  wncRelationshipModal.classList.add('open');
+  wncRelationshipModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('wnc-modal-open');
+  wncRelationshipClose?.focus({preventScroll:true});
+}
+function closeWncRelationshipMap(){
+  if(!wncRelationshipModal) return;
+  wncRelationshipModal.classList.remove('open');
+  wncRelationshipModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('wnc-modal-open');
+}
+wncRelationshipClose?.addEventListener('click',()=>{playClick();closeWncRelationshipMap();});
+wncRelationshipModal?.addEventListener('click',e=>{
+  if(e.target===wncRelationshipModal){playClick();closeWncRelationshipMap();}
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape' && wncRelationshipModal?.classList.contains('open')) closeWncRelationshipMap();
+});
+
+
 function route(){
+  closeWncRelationshipMap();
   const h = location.hash || '#/entrance';
   document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
 
@@ -987,10 +1068,10 @@ wncMobileOpen?.addEventListener('click',()=>{const u=wncMobileOpen.dataset.url;i
 document.querySelectorAll('.wnc-desktop-hit').forEach(el=>{
   el.addEventListener('mouseenter',()=>{if(!matchMedia('(pointer: coarse)').matches){playHover();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',false);}});
   el.addEventListener('mouseleave',()=>{if(!matchMedia('(pointer: coarse)').matches)restoreWncLocked();});
-  el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);});
+  el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);if(el.dataset.wncAction==='members')openWncRelationshipMap();});
 });
 
-document.querySelectorAll('.wnc-mobile-button').forEach(el=>el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);}));
+document.querySelectorAll('.wnc-mobile-button').forEach(el=>el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);if(el.dataset.wncAction==='members')openWncRelationshipMap();}));
 
 const wncRecordButton=document.getElementById('wncRecordButton');
 const wncRecordHint=document.getElementById('wncRecordHint');
