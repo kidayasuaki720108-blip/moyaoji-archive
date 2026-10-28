@@ -711,8 +711,16 @@ const WNC_TRACKS = {
 
 /* Add only confirmed public URLs here. Empty strings deliberately remain inactive. */
 const WNC_EXTERNAL = {
-  album: "",
-  tracks: {"01":"","02":"","03":"","04":"","05":"","06":"","07":""}
+  album: "https://youtu.be/s45p3_I8FBs",
+  tracks: {
+    "01":"https://www.youtube.com/watch?v=s45p3_I8FBs&t=5s",
+    "02":"https://www.youtube.com/watch?v=s45p3_I8FBs&t=223s",
+    "03":"https://www.youtube.com/watch?v=s45p3_I8FBs&t=493s",
+    "04":"https://www.youtube.com/watch?v=s45p3_I8FBs&t=738s",
+    "05":"https://www.youtube.com/watch?v=s45p3_I8FBs&t=918s",
+    "06":"https://www.youtube.com/watch?v=s45p3_I8FBs&t=1062s",
+    "07":"https://www.youtube.com/watch?v=s45p3_I8FBs&t=1297s"
+  }
 };
 
 const TRACKS = {
@@ -1014,7 +1022,7 @@ function wncHtml(action, trackId){
     return `<div class="wnc-media"><img class="wnc-members-photo" src="./wnc-portrait.jpg" alt="WHITE NOISE CLUB artist portrait"><div class="wnc-copy"><div class="wnc-kicker">PUBLIC RECORD / MEMBERS</div><div class="wnc-title">WHITE NOISE CLUB</div>Sam Pork — Vocal<br>Sinéad O’Meara — Guitar<br>Ichisam Boone — Bass<br>Nisam Boone — Keyboards<br>Golda Writer — Drums<br><br><strong>The Sixth Member: Rebecca Levi</strong><br>バー「menorah」の経営者。演奏メンバーではない。</div></div>`;
   }
   if(action==='youtube'){
-    return `<div class="wnc-kicker">EXTERNAL SIGNAL</div><div class="wnc-title">YouTube</div><div class="wnc-copy">音楽の再生先はYouTubeです。</div><div class="wnc-pending">YouTube公開準備中</div>`;
+    return `<div class="wnc-kicker">EXTERNAL SIGNAL</div><div class="wnc-title">YouTube</div><div class="wnc-copy">音楽の再生先はYouTubeです。</div><div class="wnc-open">OPEN EXTERNAL SIGNAL</div>`;
   }
   if(action==='track'){
     const title=WNC_TRACKS[trackId]||'';
