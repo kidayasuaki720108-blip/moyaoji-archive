@@ -1079,7 +1079,26 @@ document.querySelectorAll('.wnc-desktop-hit').forEach(el=>{
   el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);if(el.dataset.wncAction==='members')openWncRelationshipMap();});
 });
 
-document.querySelectorAll('.wnc-mobile-button').forEach(el=>el.addEventListener('click',()=>{playClick();renderWnc(el.dataset.wncAction,el.dataset.wncTrack||'',true);if(el.dataset.wncAction==='members')openWncRelationshipMap();}));
+document.querySelectorAll('.wnc-mobile-button').forEach(el=>el.addEventListener('click',()=>{
+  const action=el.dataset.wncAction;
+  const trackId=el.dataset.wncTrack||'';
+  playClick();
+
+  if(action==='members'){
+    renderWnc(action,trackId,true);
+    openWncRelationshipMap();
+    return;
+  }
+
+  const url=wncUrl(action,trackId);
+  if((action==='track'||action==='youtube') && url){
+    renderWnc(action,trackId,true);
+    window.location.assign(url);
+    return;
+  }
+
+  renderWnc(action,trackId,true);
+}));
 
 const wncRecordButton=document.getElementById('wncRecordButton');
 const wncRecordHint=document.getElementById('wncRecordHint');
